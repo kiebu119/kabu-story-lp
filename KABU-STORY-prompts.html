@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KABU STORY 画像生成シート</title>
+<style>
+:root{--navy:#1B2A4A;--paper:#F7F5EF;--yellow:#FFD23F;--line:#06C755;--muted:#6B7690;--red:#E5484D}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Sans","Zen Kaku Gothic New",sans-serif;background:var(--paper);color:#24324F;line-height:1.75}
+.wrap{max-width:860px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:1.6rem;color:var(--navy);margin:0 0 .2em}
+.sub{color:var(--muted);margin:0 0 28px}
+h2{font-size:1.15rem;color:#fff;background:var(--navy);padding:.4em .8em;border-radius:8px;margin:40px 0 16px}
+.box{background:#fff;border:2px solid var(--navy);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.rules li{margin-bottom:.3em}
+.warn{background:#FFF7D6;border-color:#E0B300}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:.9rem}
+th,td{border:1px solid #C9D1E0;padding:.5em .6em;text-align:left;vertical-align:top}
+th{background:#E8EDF6;color:var(--navy)}
+.card{background:#fff;border:2px solid var(--navy);border-radius:12px;margin-bottom:18px;overflow:hidden}
+.card-head{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#E8EDF6;flex-wrap:wrap}
+.step{font-weight:900;background:var(--navy);color:#fff;border-radius:6px;padding:.1em .6em;font-size:.85rem}
+.id{font-weight:900;color:var(--navy);font-size:1.1rem}
+.meta{font-size:.82rem;color:var(--muted)}
+.check{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;cursor:pointer}
+.check input{width:18px;height:18px}
+.card.done{opacity:.55}
+.card-body{padding:14px}
+.hint{font-size:.85rem;margin:0 0 10px;color:var(--muted)}
+pre{white-space:pre-wrap;word-break:break-word;background:#0F1B33;color:#E9EEF8;padding:14px;border-radius:8px;margin:0;font-family:inherit;font-size:.92rem;line-height:1.7}
+.copy{margin-top:10px;background:var(--line);color:#fff;border:none;border-radius:999px;padding:.5em 1.4em;font-weight:700;cursor:pointer;font-size:.88rem}
+.copy.ok{background:var(--navy)}
+code{background:#E8EDF6;padding:.1em .4em;border-radius:4px;font-size:.88em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>KABU STORY 画像生成シート（ChatGPT用）</h1>
+<p class="sub">構成ドキュメント STEP5 をLP用に調整した版。上から順にコピーして、<strong>ひとつのチャット</strong>で送っていきます。</p>
+
+<h2>はじめに：5つのルール</h2>
+<div class="box">
+<ol class="rules">
+  <li><strong>新しいチャット</strong>を開いて、最初に「キャラ固定宣言」を送る</li>
+  <li><strong>H6（基準画像）を最初に</strong>作って、気に入るまで出しなおす</li>
+  <li>10枚ぜんぶ<strong>同じチャットの中で</strong>作る（チャットをまたがない）</li>
+  <li>いい画像が出たら<strong>すぐ保存</strong>して、下の表のファイル名にリネームする</li>
+  <li>顔や服がずれてきたら、<strong>H6の画像を貼り付けて</strong>「この顔・この服で」と指示する</li>
+</ol>
+</div>
+<div class="box warn">
+<strong>資料からの変更点：吹き出し・文字は入れない</strong><br>
+セリフはLP側（HTML）で重ねるので、画像には文字を入れません。各プロンプトの最後に「文字なし」の指示を入れてあります。
+また、LPでは画像の上の方に吹き出しが乗るので、<strong>顔は画面の中央あたり</strong>に来るよう指定しています。
+</div>
+
+<h2>保存ファイル名とサイズ</h2>
+<table>
+<tr><th>順番</th><th>ID</th><th>内容</th><th>向き</th><th>保存名（img/_originalに上書き）</th></tr>
+<tr><td>1</td><td>H6</td><td>笑顔・全身・基準画像</td><td>縦長</td><td><code>h6.png</code></td></tr>
+<tr><td>2</td><td>H1</td><td>夜・ベッド・不安顔</td><td>縦長</td><td><code>h1.png</code></td></tr>
+<tr><td>3</td><td>H3</td><td>頭を抱える・混乱</td><td>縦長</td><td><code>h3.png</code></td></tr>
+<tr><td>4</td><td>H4</td><td>驚き顔</td><td>縦長</td><td><code>h4.png</code></td></tr>
+<tr><td>5</td><td>H5</td><td>納得顔</td><td>縦長</td><td><code>h5.png</code></td></tr>
+<tr><td>6</td><td>H2</td><td>ハルカ＋ミホ 休憩室</td><td>縦長</td><td><code>h2.png</code></td></tr>
+<tr><td>7</td><td>M1</td><td>ミホ 話しかける</td><td>縦長</td><td><code>m1.png</code></td></tr>
+<tr><td>8</td><td>M2</td><td>ミホ 満足顔</td><td>縦長</td><td><code>m2.png</code></td></tr>
+<tr><td>9</td><td>T1</td><td>タクミ スマホ差し出し</td><td>縦長</td><td><code>t1.png</code></td></tr>
+<tr><td>10</td><td>2S1</td><td>タクミ＋ハルカ カフェ</td><td><strong>横長</strong></td><td><code>2s1.png</code></td></tr>
+</table>
+<p class="hint">※ハルカ単体を先に固めてから、ミホ・タクミを追加する順番にしています（資料の生成順を少し入れ替え）。</p>
+
+<h2>STEP 0：キャラ固定宣言（最初に1回だけ）</h2>
+<div class="card"><div class="card-head"><span class="step">0</span><span class="id">固定宣言</span><label class="check"><input type="checkbox">送った</label></div>
+<div class="card-body"><pre>これからKABU STORYというNISA学習マンガのキャラクター画像を、1枚ずつ順番に作ります。以下のスタイルとキャラ設定を、このチャットの最後まで必ず維持してください。
+
+【スタイル】
+リアル寄りのアニメイラスト風・日本のマンガらしい線・高品質・ネイビーと白を基調にした落ち着いた色
+画像の中に文字・吹き出し・ロゴは入れない（セリフはあとでWebページ側で入れます）
+特に指定がない限り縦長（2:3）で作る
+
+【ハルカ（主人公）】
+28歳・日本人女性・事務職
+肩につく黒髪ストレート・前髪あり・丸い茶色の目・やさしい顔立ち・細身
+白い襟付きブラウス・紺のペンシルスカート・紺のヒール
+
+【ミホ（同僚）※あとで登場】
+27歳・日本人女性・明るい行動派
+あごラインの茶色ショートボブ・大きくて元気な目・丸顔
+ピンクのカーディガン＋白シャツ・濃紺のパンツ
+
+【タクミ（先輩）※あとで登場】
+35歳・日本人男性・落ち着いた雰囲気
+短く整った黒髪・穏やかでやさしい目・信頼感のある顔
+ライトブルーのシャツ（ノーネクタイ）・グレーのスラックス
+
+まだ画像は作らず、「了解しました」とだけ返事してください。</pre><button class="copy">コピー</button></div></div>
+
+<h2>STEP 1：ハルカ単体（H6 → H1 → H3 → H4 → H5）</h2>
+
+<div class="card"><div class="card-head"><span class="step">1</span><span class="id">H6</span><span class="meta">基準画像｜FVスライド④・試し読み扉絵/F・最終CTA</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">いちばん大事な1枚。顔・髪・服が納得いくまで何回か出しなおしてOK。</p><pre>ハルカの基準画像を作ってください。
+全身・正面立ち・自信のある明るい笑顔・片手でスマホを胸の前に持つ
+白っぽい明るい背景に、やわらかいキラキラのエフェクト
+頭から足先まで全部入れて、頭の上に少し余白をあける
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">2</span><span class="id">H1</span><span class="meta">夜・不安顔｜FVスライド①・試し読みB</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>同じキャラ・同じ服装（白ブラウス・紺スカート）で作ってください。
+夜の一人暮らしの部屋・ベッドに座ってスマホの画面を見ている
+不安そうな表情・スマホの光で顔が青白く照らされている・部屋は薄暗い
+上半身〜ひざくらいまで・顔は画面の中央あたり・上部に少し余白
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">3</span><span class="id">H3</span><span class="meta">混乱顔｜FVスライド③・悩み共感・試し読みC</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">金融用語の文字はLP側で飛ばすので、画像には入れません。</p><pre>同じキャラ・同じ服装（白ブラウス・紺スカート）で作ってください。
+自宅の部屋・机の前に座ってノートパソコンを開いている
+両手で頭を抱えて、とても困っている表情
+頭のまわりに、はてなマークと汗マークだけ描く（文字は描かない）
+上半身・顔は画面の中央・まわりに余白を多めに
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">4</span><span class="id">H4</span><span class="meta">驚き顔｜料金・試し読みE</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>同じキャラ・同じ服装（白ブラウス・紺スカート）で作ってください。
+カフェの背景・スマホの画面を見て驚いている
+目を大きく見開いて、口が少し開いている・目のまわりにキラキラのエフェクト
+上半身のアップ・顔は画面の中央
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">5</span><span class="id">H5</span><span class="meta">納得顔｜ベネフィット・試し読みE</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>同じキャラ・同じ服装（白ブラウス・紺スカート）で作ってください。
+カフェの背景・スマホを見ながら「あ、そういうことか」と気づいた表情
+やさしい笑顔・顔のまわりにふわっとした光のエフェクト
+上半身のアップ・顔は画面の中央
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<h2>STEP 2：ミホ（H2 → M1 → M2）</h2>
+
+<div class="card"><div class="card-head"><span class="step">6</span><span class="id">H2</span><span class="meta">ハルカ＋ミホ｜FVスライド②・試し読みB</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>ここからミホも登場します。最初に決めたミホの設定（茶色ショートボブ・ピンクカーディガン＋白シャツ・濃紺パンツ）で、ハルカは同じキャラ・同じ服装のまま作ってください。
+会社の休憩室・2人が並んで立って話している
+左にミホ：前のめりで楽しそうに話しかけている
+右にハルカ：あいまいな苦笑い・少し困った様子
+2人とも上半身〜腰まで・顔は画面の中央あたり・上部に少し余白
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">7</span><span class="id">M1</span><span class="meta">ミホ単体｜悩み共感（丸いアイコンで使用）</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">資料にプロンプトがなかったので新規作成。LPでは顔の部分を丸く切り抜いて使います。</p><pre>さっきと同じミホのキャラ・同じ服装で、ミホ1人の画像を作ってください。
+オフィス休憩室・こちらに向かって前のめりで話しかけている
+明るい笑顔・片手を軽く上げてジェスチャー
+上半身・顔は画面の上から1/3くらい
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">8</span><span class="id">M2</span><span class="meta">ミホ満足顔｜読んだ人の声</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>同じミホのキャラ・同じ服装で作ってください。
+オフィス休憩室・背景にコーヒーマシン
+片手にスマホ、もう片手にコーヒーカップを持って満足そうに微笑んでいる
+リラックスした雰囲気・上半身・顔は画面の中央
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<h2>STEP 3：タクミ（T1 → 2S1）</h2>
+
+<div class="card"><div class="card-head"><span class="step">9</span><span class="id">T1</span><span class="meta">タクミ｜解決策・試し読みD</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>ここからタクミが登場します。最初に決めたタクミの設定（短い黒髪・ライトブルーのシャツ・ノーネクタイ・グレーのスラックス）で作ってください。
+カフェの背景・こちら（見ている人）に向かって、穏やかな笑顔でスマホの画面を差し出している
+スマホの画面はこちら向き（画面の中身は描かなくてOK）
+上半身・顔は画面の中央より少し上
+縦長（2:3）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<div class="card"><div class="card-head"><span class="step">10</span><span class="id">2S1</span><span class="meta">タクミ＋ハルカ｜FAQ・試し読みD</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">この1枚だけ横長です。</p><pre>これまでのキャラ設定を維持したまま、タクミとハルカの2ショットを作ってください。
+カフェのテーブルに向かい合って座っている・テーブルにコーヒーカップ2つ
+左にタクミ：穏やかな笑顔で話している
+右にハルカ：同じ服装・前向きで少し驚いた表情
+2人の顔が画面の中央の高さにそろうように・上部に少し余白
+横長（3:2）・文字や吹き出しは入れない</pre><button class="copy">コピー</button></div></div>
+
+<h2>崩れたときの直し方</h2>
+<table>
+<tr><th>症状</th><th>送るメッセージ</th></tr>
+<tr><td>服装がずれた</td><td>同じキャラ・同じ服装（白ブラウス・紺スカート）で再生成してください</td></tr>
+<tr><td>顔が変わった</td><td>H6の画像を貼り付けて「この顔と同じキャラで、さっきの指示をもう一度」</td></tr>
+<tr><td>髪色・髪型が変わった</td><td>「黒髪ストレート・肩につく長さ・前髪あり」を先頭に足してもう一度</td></tr>
+<tr><td>文字や吹き出しが入った</td><td>画像の中の文字と吹き出しをすべて消して、同じ絵で再生成してください</td></tr>
+<tr><td>何回やっても直らない</td><td>新しいチャットで固定宣言から。H6の画像を最初に貼り付けて「このキャラで」と伝える</td></tr>
+</table>
+
+<h2>保存後のチェック</h2>
+<div class="box">
+<ul class="rules">
+  <li>ChatGPTの保存名（ChatGPT Image …png）を上の表のファイル名に変えて、<code>kabu-story-lp/img/_original</code> に上書き</li>
+  <li>LPが読み込んでいるのは軽量化した <code>img/〇〇.webp</code>。差し替えたらClaudeに「webpに変換して」と頼む</li>
+  <li>Live Serverで開いて、FV・試し読みで<strong>顔が切れていないか</strong>確認（切れていたら教えてください。CSSで位置を調整します）</li>
+</ul>
+</div>
+
+</div>
+<script>
+document.querySelectorAll('.copy').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const text=btn.previousElementSibling.textContent;
+    try{await navigator.clipboard.writeText(text)}catch(e){
+      const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();
+    }
+    btn.textContent='コピーしました';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='コピー';btn.classList.remove('ok')},1500);
+  });
+});
+document.querySelectorAll('.check input').forEach(cb=>{
+  cb.addEventListener('change',()=>cb.closest('.card').classList.toggle('done',cb.checked));
+});
+</script>
+</body>
+</html>
