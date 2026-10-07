@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KABU STORY 画像生成シート v2（追加6枚）</title>
+<style>
+:root{--navy:#1B2A4A;--paper:#F7F5EF;--yellow:#FFD23F;--line:#06C755;--muted:#6B7690;--red:#E5484D}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Hiragino Sans","Zen Kaku Gothic New",sans-serif;background:var(--paper);color:#24324F;line-height:1.75}
+.wrap{max-width:860px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:1.6rem;color:var(--navy);margin:0 0 .2em}
+.sub{color:var(--muted);margin:0 0 28px}
+h2{font-size:1.15rem;color:#fff;background:var(--navy);padding:.4em .8em;border-radius:8px;margin:40px 0 16px}
+.box{background:#fff;border:2px solid var(--navy);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.rules li{margin-bottom:.3em}
+.warn{background:#FFF7D6;border-color:#E0B300}
+table{width:100%;border-collapse:collapse;background:#fff;font-size:.9rem}
+th,td{border:1px solid #C9D1E0;padding:.5em .6em;text-align:left;vertical-align:top}
+th{background:#E8EDF6;color:var(--navy)}
+.card{background:#fff;border:2px solid var(--navy);border-radius:12px;margin-bottom:18px;overflow:hidden}
+.card-head{display:flex;align-items:center;gap:12px;padding:10px 14px;background:#E8EDF6;flex-wrap:wrap}
+.step{font-weight:900;background:var(--navy);color:#fff;border-radius:6px;padding:.1em .6em;font-size:.85rem}
+.id{font-weight:900;color:var(--navy);font-size:1.1rem}
+.meta{font-size:.82rem;color:var(--muted)}
+.check{margin-left:auto;display:flex;align-items:center;gap:6px;font-size:.85rem;font-weight:700;cursor:pointer}
+.check input{width:18px;height:18px}
+.card.done{opacity:.55}
+.card-body{padding:14px}
+.hint{font-size:.85rem;margin:0 0 10px;color:var(--muted)}
+pre{white-space:pre-wrap;word-break:break-word;background:#0F1B33;color:#E9EEF8;padding:14px;border-radius:8px;margin:0;font-family:inherit;font-size:.92rem;line-height:1.7}
+.copy{margin-top:10px;background:var(--line);color:#fff;border:none;border-radius:999px;padding:.5em 1.4em;font-weight:700;cursor:pointer;font-size:.88rem}
+.copy.ok{background:var(--navy)}
+code{background:#E8EDF6;padding:.1em .4em;border-radius:4px;font-size:.88em}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>KABU STORY 画像生成シート v2（追加6枚）</h1>
+<p class="sub">コーチのフィードバックを受けて、試し読みを「ミホのハワイ婚の秘密 → 続きはLINEで」のストーリーに変更。そのための追加画像です。</p>
+
+<h2>はじめに</h2>
+<div class="box">
+<ol class="rules">
+  <li><strong>前回のChatGPTのチャットが残っていれば、その続きで作る</strong>のがいちばん安定します</li>
+  <li>チャットがない場合は、新しいチャットで <strong>STEP 0</strong> を送り、<strong>H6とM1の画像を添付</strong>して「この2人で」と伝える</li>
+  <li>今回の画像は<strong>マンガのコマ</strong>として使います。吹き出しを上に重ねるので、各プロンプトの「余白」の指定を守ってもらう</li>
+  <li>保存したら下の表の名前にして <code>img/_original</code> へ。そろったらClaudeに「webpに変換して」と頼む</li>
+</ol>
+</div>
+
+<h2>保存ファイル名</h2>
+<table>
+<tr><th>順番</th><th>ID</th><th>内容</th><th>向き</th><th>使う場所</th><th>保存名</th></tr>
+<tr><td>1</td><td>F1</td><td>夜・窓辺で将来が不安</td><td>縦長</td><td>FV①・試し読みB</td><td><code>f1.png</code></td></tr>
+<tr><td>2</td><td>C1</td><td>朝の出社・トボトボ</td><td><strong>横長</strong></td><td>試し読みC</td><td><code>c1.png</code></td></tr>
+<tr><td>3</td><td>H7</td><td>ハルカ・ガーン（衝撃）</td><td>縦長</td><td>試し読みE</td><td><code>h7.png</code></td></tr>
+<tr><td>4</td><td>H8</td><td>ハルカ・身を乗り出す</td><td>縦長</td><td>試し読みG</td><td><code>h8.png</code></td></tr>
+<tr><td>5</td><td>M3</td><td>ミホ・結婚報告（指輪）</td><td>縦長</td><td>試し読みD</td><td><code>m3.png</code></td></tr>
+<tr><td>6</td><td>M4</td><td>ミホ・ニヤッ（ナイショ）</td><td>縦長</td><td>試し読みF</td><td><code>m4.png</code></td></tr>
+</table>
+
+<h2>STEP 0：新しいチャットの場合だけ</h2>
+<div class="card"><div class="card-head"><span class="step">0</span><span class="id">固定宣言</span><span class="meta">前回と同じチャットなら不要</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">H6とM1の画像を一緒に添付して送ってください。</p><pre>これからKABU STORYというNISA学習マンガのコマ用の画像を作ります。添付の2人（ハルカ・ミホ）と同じ顔・髪型・服装を、このチャットの最後まで必ず維持してください。
+
+【スタイル】
+リアル寄りのアニメイラスト風・日本のマンガらしい線・高品質
+画像の中に文字・吹き出し・効果音の文字は入れない
+特に指定がない限り縦長（2:3）
+
+【ハルカ】28歳・肩につく黒髪ストレート・前髪あり・丸い茶色の目・白い襟付きブラウス・紺のペンシルスカート
+【ミホ】27歳・あごラインの茶色ショートボブ・大きくて元気な目・ピンクのカーディガン＋白シャツ・濃紺のパンツ
+
+まだ画像は作らず、「了解しました」とだけ返事してください。</pre><button class="copy">コピー</button></div></div>
+
+<h2>ハルカ編</h2>
+<div class="card"><div class="card-head"><span class="step">1</span><span class="id">F1</span><span class="meta">FV①・試し読みB（いちばん大事）</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">FVの1枚目にもなります。「将来どうなるの？」が伝わる、静かで少し寂しい絵に。</p><pre>同じハルカ・同じ服装（白ブラウス・紺スカート）で作ってください。マンガのコマとして使います。
+夜の一人暮らしの部屋・窓辺に座って、膝を抱えて窓の外の夜景をぼんやり見ている
+将来が不安そうな、少し寂しげな表情（泣いてはいない）
+部屋は薄暗く、街の灯りがやわらかく顔を照らしている
+上半身〜ひざくらいまで・顔は画面の中央より少し上
+画面の左上に、吹き出しを入れるための余白をあける
+縦長（2:3）
+文字・吹き出し・効果音の文字は入れない（あとでWebページ側で入れます）</pre><button class="copy">コピー</button></div></div>
+<div class="card"><div class="card-head"><span class="step">2</span><span class="id">C1</span><span class="meta">試し読みC</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">この1枚だけ横長です。</p><pre>同じハルカ・同じ服装で、紺のショルダーバッグを持たせて作ってください。マンガのコマとして使います。
+朝の通勤・オフィス街の歩道を、肩を落としてトボトボ歩いている
+少し疲れた、ぼんやりした表情・ビルの間から朝日が差している
+全身・ハルカは画面の中央からやや左
+画面の左上と右側に余白をあける
+横長（3:2）
+文字・吹き出し・効果音の文字は入れない（あとでWebページ側で入れます）</pre><button class="copy">コピー</button></div></div>
+<div class="card"><div class="card-head"><span class="step">3</span><span class="id">H7</span><span class="meta">試し読みE（ガーン）</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">マンガらしいオーバーな驚きでOKです。</p><pre>同じハルカ・同じ服装で作ってください。マンガのコマとして使います。
+会社の休憩室・同僚の話を聞いて衝撃を受けている
+目を大きく見開いて固まっている・口がぽかんと開いている
+顔の上半分にマンガのショック表現の縦線・背景は少し暗く
+手に持ったコーヒーカップが少し傾いている
+上半身・顔は画面の中央
+画面の上部に、吹き出しを入れるための余白を広めにあける
+縦長（2:3）
+文字・吹き出し・効果音の文字は入れない（あとでWebページ側で入れます）</pre><button class="copy">コピー</button></div></div>
+<div class="card"><div class="card-head"><span class="step">4</span><span class="id">H8</span><span class="meta">試し読みG（身を乗り出す）</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>同じハルカ・同じ服装で作ってください。マンガのコマとして使います。
+会社の休憩室・テーブルに両手をついて、前のめりに身を乗り出している
+興味津々で目がキラキラ・口が少し開いた「え！なにそれ！？」の表情
+上半身・顔は画面の中央より少し上
+画面の右上と右下に余白をあける
+縦長（2:3）
+文字・吹き出し・効果音の文字は入れない（あとでWebページ側で入れます）</pre><button class="copy">コピー</button></div></div>
+
+<h2>ミホ編</h2>
+<div class="card"><div class="card-head"><span class="step">5</span><span class="id">M3</span><span class="meta">試し読みD（結婚報告）</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><pre>前回と同じミホ・同じ服装（ピンクのカーディガン＋白シャツ）で作ってください。マンガのコマとして使います。
+会社の休憩室・満面の笑みで、左手の薬指の婚約指輪をこちらに向けて見せている
+とても嬉しそう・頬が少し赤い・指輪のまわりに小さなキラキラ
+上半身・顔は画面の中央より少し下
+画面の右上に、吹き出しを入れるための余白を広めにあける
+縦長（2:3）
+文字・吹き出し・効果音の文字は入れない（あとでWebページ側で入れます）</pre><button class="copy">コピー</button></div></div>
+<div class="card"><div class="card-head"><span class="step">6</span><span class="id">M4</span><span class="meta">試し読みF（ニヤッ）</span><label class="check"><input type="checkbox">保存した</label></div>
+<div class="card-body"><p class="hint">「お金の秘密がある」雰囲気。お金や札束は描かないでください。</p><pre>同じミホ・同じ服装で作ってください。マンガのコマとして使います。
+会社の休憩室・意味ありげにニヤッと笑っている
+片目を少し細めて、人差し指を口元に当てる「ナイショ」のポーズ
+もう片方の手でスマホを胸の前に持っている
+上半身・顔は画面の中央より少し上
+画面の左上と左下に余白をあける
+お金・札束・数字は描かない
+縦長（2:3）
+文字・吹き出し・効果音の文字は入れない（あとでWebページ側で入れます）</pre><button class="copy">コピー</button></div></div>
+
+<h2>崩れたときの直し方</h2>
+<table>
+<tr><th>症状</th><th>送るメッセージ</th></tr>
+<tr><td>顔や服が変わった</td><td>H6（またはM1）の画像を貼り付けて「この顔・この服で、さっきの指示をもう一度」</td></tr>
+<tr><td>文字や効果音が入った</td><td>画像の中の文字・吹き出し・効果音をすべて消して、同じ絵で再生成してください</td></tr>
+<tr><td>余白がない（顔が端すぎる）</td><td>キャラクターを少し小さくして、〇〇側に余白をあけて再生成してください</td></tr>
+</table>
+</div>
+<script>
+document.querySelectorAll('.copy').forEach(btn=>{
+  btn.addEventListener('click',async()=>{
+    const text=btn.previousElementSibling.textContent;
+    try{await navigator.clipboard.writeText(text)}catch(e){
+      const t=document.createElement('textarea');t.value=text;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove();
+    }
+    btn.textContent='コピーしました';btn.classList.add('ok');
+    setTimeout(()=>{btn.textContent='コピー';btn.classList.remove('ok')},1500);
+  });
+});
+document.querySelectorAll('.check input').forEach(cb=>{
+  cb.addEventListener('change',()=>cb.closest('.card').classList.toggle('done',cb.checked));
+});
+</script>
+</body>
+</html>

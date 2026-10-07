@@ -327,3 +327,65 @@ button{font-family:inherit;cursor:pointer}
   .sticky-cta{display:none}
   .footer{padding-bottom:40px}
 }
+
+
+/* =========================================
+   v2：吹き出しを絵の中へ・擬音・新ストーリー
+========================================= */
+/* 吹き出しの位置（p-）としっぽの向き（t-） */
+.bubble.p-tl{top:10px;left:10px}
+.bubble.p-tr{top:10px;right:10px}
+.bubble.p-bl{bottom:12px;left:10px}
+.bubble.p-br{bottom:12px;right:10px}
+.bubble.t-bl::after{bottom:-7px;left:24%;transform:rotate(45deg)}
+.bubble.t-br::after{bottom:-7px;right:24%;transform:rotate(45deg)}
+.bubble.t-tl::after{top:-7px;left:24%;transform:rotate(-135deg)}
+.bubble.t-tr::after{top:-7px;right:24%;transform:rotate(-135deg)}
+
+/* 心の声（考えごと）の吹き出し：しっぽを小さな丸に */
+.bubble--think{border-radius:50%;}
+.bubble--think::after{width:14px;height:14px;border-radius:50%;border:2.5px solid var(--ink);bottom:-20px;right:26%;transform:none}
+.bubble--think::before{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;border:2px solid var(--ink);bottom:-32px;right:20%}
+
+/* FVの吹き出し */
+.fv-bubble{top:22px;left:16px;z-index:2;font-size:.95rem;padding:.9em 1.3em;white-space:nowrap}
+.fv-slide .bubble--think::after{left:auto}
+/* 画像内の吹き出し（セクション画像） */
+.section-img{position:relative}
+.img-bubble{font-size:.92rem;padding:.9em 1.3em}
+.img-bubble.p-tl{top:16px;left:16px}
+.img-bubble.p-tr{top:16px;right:16px}
+.img-bubble.p-br{bottom:18px;right:16px}
+.img-label{position:absolute;right:10px;bottom:10px;background:rgba(15,27,51,.75);color:#fff;font-size:.7rem;padding:.3em .8em;border-radius:999px}
+
+/* 擬音 */
+.sfx{position:absolute;z-index:3;font-family:var(--ff-head);font-size:1.7rem;line-height:1;color:#fff;
+  -webkit-text-stroke:5px var(--ink);paint-order:stroke fill;letter-spacing:.04em;transform:rotate(-8deg);pointer-events:none;white-space:nowrap}
+.sfx--v{writing-mode:vertical-rl;transform:none;font-size:1.3rem;color:#DDE3EE}
+.sfx--shock{font-size:2.4rem;color:#9FB4D8;transform:rotate(6deg)}
+.sfx--pop{color:var(--yellow);transform:rotate(-10deg)}
+.sfx--quiet{color:#C9D1E0;font-size:1.2rem;transform:none}
+.sfx--fv{right:18px;top:50%;font-size:2rem}
+.sfx--img{left:16px;bottom:22%;color:var(--yellow);font-size:2.2rem}
+
+/* 新しいコマ */
+.koma-n1{aspect-ratio:4/3.4}
+.koma-n1 img{object-position:center 30%}
+.koma-n2{aspect-ratio:16/9}
+.koma-n3{aspect-ratio:4/4.6}
+.koma-n3 img{object-position:center 20%}
+.koma-n4{aspect-ratio:4/3.6}
+.koma-n4 img{object-position:center 22%}
+.koma-n5{aspect-ratio:3/4.6}
+.koma-n5 img{object-position:center 18%}
+.koma-n5 .bubble{font-size:.78rem}
+.koma-cliff{background:var(--navy);color:#fff;text-align:center;padding:36px 16px 40px;
+  background-image:radial-gradient(rgba(255,255,255,.08) 1.5px,transparent 1.5px);background-size:12px 12px}
+.cliff-small{margin:0 0 .4em;font-weight:900;font-size:1rem}
+.cliff-big{margin:0;font-family:var(--ff-head);font-size:2.2rem;color:var(--yellow);letter-spacing:.2em;text-shadow:0 3px 0 var(--ink)}
+
+@media (min-width:768px){
+  .fv-bubble{top:32px;left:28px;font-size:1.05rem}
+  .img-bubble{font-size:1rem}
+  .sfx{font-size:2rem}
+}
