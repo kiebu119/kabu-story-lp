@@ -21,7 +21,7 @@
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:var(--ff-body);color:var(--text);background:var(--white);line-height:1.8;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
+img{max-width:100%;height:auto;display:block}
 button{font-family:inherit;cursor:pointer}
 .sp{display:inline}
 @media (min-width:768px){.sp{display:none}}
